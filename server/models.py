@@ -5,4 +5,24 @@ metadata = MetaData()
 
 db = SQLAlchemy(metadata=metadata)
 
-# Add models here
+
+class Earthquake(db.Model):
+    '''A single recorded seismic event.'''
+    __tablename__ = "earthquakes"
+
+    id = db.Column(db.Integer, primary_key=True)
+    magnitude = db.Column(db.Float)
+    location = db.Column(db.String)
+    year = db.Column(db.Integer)
+
+    def to_dict(self):
+        '''Serialize the earthquake's attributes for a JSON response.'''
+        return {
+            "id": self.id,
+            "magnitude": self.magnitude,
+            "location": self.location,
+            "year": self.year,
+        }
+
+    def __repr__(self):
+        return f"<Earthquake {self.id}, {self.magnitude}, {self.location}, {self.year}>"
